@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace StrongerTypes
+namespace StrongerTypes.NonNullable
 {
     /// <summary>
     /// A small wrapper around reference types that specifies that the reference will not be null.
