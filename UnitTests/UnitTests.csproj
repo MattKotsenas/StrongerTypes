@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="NonNullableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExceptionalTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StrongerTypes\StrongerTypes.csproj">
