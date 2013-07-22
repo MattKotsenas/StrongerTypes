@@ -1,7 +1,8 @@
 Stronger Types
 ==============
 
-Stronger Types is a .NET [Portable Class Library](http://msdn.microsoft.com/en-us/library/gg597391.aspx) that provides general purpose types.
+Stronger Types is a .NET [Portable Class Library](http://msdn.microsoft.com/en-us/library/gg597391.aspx) that provides general purpose types
+to make your code safer and easier to read and maintain. Each type is its own namespace so you can pick and choose to suit your needs.
 
 ## NonNullable
 
@@ -42,4 +43,26 @@ all over their code. Consider the previous example if both `GetName()` and `GetA
     address = GetAddress(name);
     Console.WriteLine(address);
     
-    
+## Exceptional
+
+Sometimes an `Exception` may be thrown far away from the code that has is best suited to handle it. This may especially be true in service-based architectures
+where a query or operation may pass through several layers of code, any of which may throw an exception, and where the code most able to handle that exception may
+be the original client or query submitter.
+
+Often in these situations lead to "triagle code" where try/catch blocks are nested and each function call must handle a wide range of error conditions. `Exceptional`
+reduces the try/catch burdern and allows users of your code to clearly see that an exception may be thrown. To use Exceptional:
+
+    public static Exceptional<string> FunctionThatMightThrow()
+    {
+        return new Exceptional(DoSomething); // DoSomething is a Func that may return a string or may throw an exception! 
+    }
+
+    var sample = FunctionThatMightThrow();
+    if (sample.HasException)
+    {
+      // Error handling code ...
+    }
+    else
+    {
+      Console.WriteLine(sample.Value);
+    }
