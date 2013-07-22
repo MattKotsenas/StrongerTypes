@@ -50,12 +50,28 @@ where a query or operation may pass through several layers of code, any of which
 be the original client or query submitter.
 
 Often in these situations lead to "triagle code" where try/catch blocks are nested and each function call must handle a wide range of error conditions. `Exceptional`
-reduces the try/catch burdern and allows users of your code to clearly see that an exception may be thrown. To use Exceptional:
+reduces the try/catch burdern and allows users of your code to clearly see that an exception may be thrown. To use Exceptional in your code:
 
     public static Exceptional<string> FunctionThatMightThrow()
     {
-        return new Exceptional(DoSomething); // DoSomething is a Func that may return a string or may throw an exception! 
+      try
+      {
+        return DoSomething();
+      }
+      catch (Exception e)
+      {
+        return new Exceptional(e);
+      }
     }
+
+Or more consise:
+
+    public static Exceptional<string> FunctionThatMightThrow()
+    {
+      return new Exceptional(DoSomething); // DoSomething is a Func that may return a string or may throw an exception! 
+    }
+
+In either case callers can then use the Exception like this:
 
     var sample = FunctionThatMightThrow();
     if (sample.HasException)
@@ -66,3 +82,5 @@ reduces the try/catch burdern and allows users of your code to clearly see that 
     {
       Console.WriteLine(sample.Value);
     }
+
+The Exceptional object can then be passed around, just like in the non-error case, reducing the number of code path and error handling needed.
