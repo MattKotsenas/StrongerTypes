@@ -56,7 +56,7 @@ namespace StrongerTypes.NonNullable
         }
 
         /// <summary>
-        /// Type conversion operation that allows callees to convert a NonNullable
+        /// Type conversion operation that allows callers to convert a NonNullable
         /// to it's wrapped type (i.e. T) without a cast.
         /// </summary>
         /// <param name="obj">The NonNullable object to convert.</param>
@@ -67,7 +67,7 @@ namespace StrongerTypes.NonNullable
         }
 
         /// <summary>
-        /// Type conversion operation that allows callees to convert from a type T
+        /// Type conversion operation that allows callers to convert from a type T
         /// to a NonNullable&lt;T%gt;. This cast is explict because casting a null
         /// to NonNullable is not allows and will throw an exception.
         /// </summary>

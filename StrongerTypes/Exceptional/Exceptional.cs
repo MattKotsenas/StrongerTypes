@@ -81,7 +81,7 @@ namespace StrongerTypes.Exceptional
         }
 
         /// <summary>
-        /// Type conversion operation that allows callees to convert from type T to an Exceptional&lt;T%gt;
+        /// Type conversion operation that allows callers to convert from type T to an Exceptional&lt;T%gt;
         /// without an explict cast.
         /// </summary>
         /// <param name="obj">The object to wrap.</param>
