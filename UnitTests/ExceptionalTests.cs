@@ -40,6 +40,16 @@ namespace UnitTests
             Assert.AreEqual(default(string), ex.Value);
         }
 
+        [TestMethod]
+        public void NewExceptionTest()
+        {
+            string expected = "test message";
+            var ex = new Exceptional<string>(new DivideByZeroException(expected));
+
+            Assert.IsTrue(ex.HasException);
+            Assert.AreEqual(expected, ex.Exception.Message);
+        }
+
         private string SampleMethod()
         {
             throw new ArgumentNullException();

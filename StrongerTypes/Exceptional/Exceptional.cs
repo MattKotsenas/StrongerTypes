@@ -52,7 +52,7 @@ namespace StrongerTypes.Exceptional
         /// Create a new Exceptional. The value function is evaluated. If an exception is thrown
         /// it is caught and Exception and HasException is set. If the function completes Value is set.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to evaluate and wrap.</param>
         public Exceptional(Func<T> value)
         {
             try
@@ -67,6 +67,17 @@ namespace StrongerTypes.Exceptional
                 this.Exception = e;
                 this.Value = default(T);
             }
+        }
+
+        /// <summary>
+        ///  Create a new Exceptional with the provided Exception. HasException and Exception are set.
+        /// </summary>
+        /// <param name="e">The Exception to to wrap.</param>
+        public Exceptional(Exception e)
+        {
+            this.HasException = true;
+            this.Exception = e;
+            this.Value = default(T);
         }
     }
 }
