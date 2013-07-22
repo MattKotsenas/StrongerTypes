@@ -58,5 +58,40 @@ namespace UnitTests
 
             Assert.IsTrue(exceptionThrown, "InvalidOperationException is expected when creating a NonNullable via the parameterless contrustor");
         }
+
+        [TestMethod]
+        public void ImplictConverstionTest()
+        {
+            NonNullable<SampleClass> nonNullable = new NonNullable<SampleClass>(new SampleClass());
+            SampleClass implicitlyConverted = nonNullable;
+
+            Assert.IsNotNull(implicitlyConverted);
+        }
+
+        [TestMethod]
+        public void ExplicitConverstionTest()
+        {
+            SampleClass myClass = new SampleClass();
+            NonNullable<SampleClass> nonNullable = (NonNullable<SampleClass>)myClass;
+
+            Assert.AreSame(myClass, nonNullable.Value);
+        }
+
+        [TestMethod]
+        public void ExplicitNullConverstionTest()
+        {
+            bool exceptionThrown = false;
+
+            try
+            {
+                NonNullable<SampleClass> nonNullable = (NonNullable<SampleClass>)null;
+            }
+            catch (ArgumentNullException)
+            {
+                exceptionThrown = true;
+            }
+
+            Assert.IsTrue(exceptionThrown);
+        }
     }
 }

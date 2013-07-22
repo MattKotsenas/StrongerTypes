@@ -54,5 +54,28 @@ namespace StrongerTypes.NonNullable
                 return value;
             }
         }
+
+        /// <summary>
+        /// Type conversion operation that allows callees to convert a NonNullable
+        /// to it's wrapped type (i.e. T) without a cast.
+        /// </summary>
+        /// <param name="obj">The NonNullable object to convert.</param>
+        /// <returns>The wrapped value.</returns>
+        public static implicit operator T(NonNullable<T> obj)
+        {
+            return obj.Value;
+        }
+
+        /// <summary>
+        /// Type conversion operation that allows callees to convert from a type T
+        /// to a NonNullable&lt;T%gt;. This cast is explict because casting a null
+        /// to NonNullable is not allows and will throw an exception.
+        /// </summary>
+        /// <param name="obj">The object of type T to convert to a NonNullable</param>
+        /// <returns>a NonNullable that wraps obj.</returns>
+        public static explicit operator NonNullable<T>(T obj)
+        {
+            return new NonNullable<T>(obj);
+        }
     }
 }
