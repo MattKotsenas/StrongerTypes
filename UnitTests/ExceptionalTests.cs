@@ -50,6 +50,15 @@ namespace UnitTests
             Assert.AreEqual(expected, ex.Exception.Message);
         }
 
+        [TestMethod]
+        public void WrapConversionTest()
+        {
+            var sample = "test";
+            Exceptional<string> ex = sample;
+
+            Assert.AreEqual(sample, ex.Value);
+        }
+
         private string SampleMethod()
         {
             throw new ArgumentNullException();

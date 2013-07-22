@@ -60,7 +60,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void ImplictConverstionTest()
+        public void UnwrapConverstionTest()
         {
             NonNullable<SampleClass> nonNullable = new NonNullable<SampleClass>(new SampleClass());
             SampleClass implicitlyConverted = nonNullable;
@@ -69,7 +69,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void ExplicitConverstionTest()
+        public void WrapConverstionTest()
         {
             SampleClass myClass = new SampleClass();
             NonNullable<SampleClass> nonNullable = (NonNullable<SampleClass>)myClass;
@@ -78,7 +78,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void ExplicitNullConverstionTest()
+        public void WrapNullConverstionTest()
         {
             bool exceptionThrown = false;
 

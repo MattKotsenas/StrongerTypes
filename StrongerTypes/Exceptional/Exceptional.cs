@@ -79,5 +79,16 @@ namespace StrongerTypes.Exceptional
             this.Exception = e;
             this.Value = default(T);
         }
+
+        /// <summary>
+        /// Type conversion operation that allows callees to convert from type T to an Exceptional&lt;T%gt;
+        /// without an explict cast.
+        /// </summary>
+        /// <param name="obj">The object to wrap.</param>
+        /// <returns>A new Exceptional that wraps obj.</returns>
+        public static implicit operator Exceptional<T>(T obj)
+        {
+            return new Exceptional<T>(obj);
+        }
     }
 }
