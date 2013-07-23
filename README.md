@@ -9,7 +9,7 @@ to make your code safer and easier to read and maintain. Each type is its own na
 Unlike value types (e.g. `int`), reference types can be `null`. In some cases, a function may return null as valid output; in other cases null
 represents an error. This ambiguous use of `null` causes two problems:
 
-* __Lack of null handling__
+### Lack of null handling
 
 ```cs
 string myString = GetValue(); // GetValue() returns null
@@ -18,7 +18,7 @@ Console.WriteLine(myString.ToUpper()); // Throws a NullReferenceException
 
 Forgetting to check for `null` when it an expected value is a common source of easily-avoidable errors.
 
-* __Ubiquitous null checking__
+### Ubiquitous null checking
 
 ```cs
 string name;
@@ -37,7 +37,7 @@ if (address != null)
     
 Oppositely, checking for `null` can clutter code and reduce readability.
 
-Returning a `NonNullable` from a function signafies that a `null` is never an expected result and frees users of your code from spinkling null checks
+Returning a `NonNullable` from a function signifies that `null` is never an expected result and frees users of your code from spinkling null checks
 all over their code. Consider the previous example if both `GetName()` and `GetAddress()` returned `NonNullable<string>`:
 
 ```cs
@@ -49,10 +49,12 @@ address = GetAddress(name);
 Console.WriteLine(address);
 ```
 
+Converting from the NonNullable to the naked type happens implicitly (going the other way requires an explict cast).
+
 ## Exceptional
 
 Sometimes an `Exception` may be thrown far away from the code that is best suited to handle it. This may especially be true in service-based architectures
-where a query or operation may pass through several layers of code, any of which may throw an exception, and where the recovery logic may depend on business
+where a query or operation may pass through several layers of code, any of which may throw, and where the recovery logic may depend on business
 rules in the client.
 
 Often these situations lead to "triagle code" where try/catch blocks are nested and each function call must handle a wide range of error conditions. `Exceptional`
@@ -95,4 +97,4 @@ else
 }
 ```
 
-The Exceptional object can be passed around like a value, reducing error handling.
+The `Exceptional` object can be passed around like a value, reducing error handling.
