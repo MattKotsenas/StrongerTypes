@@ -98,3 +98,27 @@ else
 ```
 
 The `Exceptional` object can be passed around like a value, reducing error handling.
+
+## Weak
+
+A [weak reference](http://msdn.microsoft.com/en-us/library/ms404247.aspx) allows you to keep a reference an object, but unlike a normal (strong) reference,
+not prevent the object from being garbage collected. Weak references are useful when building caches or transferring ephemeral data like events. In these
+cases you want to reference potentially large objects but not prevent the runtime from reclaiming memory when needed.
+
+### Usage
+
+Using a Weak object is simple:
+
+```cs
+Weak<MyClass> weakRef = new Weak<MyClass>(myClassObj);
+
+// ... do lots of work here ...
+
+MyClass newClassObj;
+bool success = weakRef.TryGetTarget(out newClassObj));
+```
+
+### Doesn't .NET have this already?
+Well, sort of. There is a generic `WeakReference<T>` [class](http://msdn.microsoft.com/en-us/library/gg712738.aspx), but it's only available in .NET 4.5.
+A non-generic `WeakReference` [class](http://msdn.microsoft.com/en-us/library/system.weakreference.aspx) is available more broadly, but it's a bit cumbersome
+and promotes incorect use. `Weak<T>` brings the goodness of the .NET 4.5 WeakReference<T> to the PCL.
