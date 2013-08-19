@@ -18,9 +18,10 @@
     <Target Name="Test" DependsOnTargets="Build">
         <PropertyGroup>
             <TestsPath>..\UnitTests\bin\$(Configuration)</TestsPath>
+            <TestFileName>$(TestsPath)\TestResults.trx</TestFileName>
         </PropertyGroup>
         <Delete Files="$(TestFileName)" />
         <Exec ContinueOnError="false"
-              Command="mstest /testcontainer:$(TestsPath)\UnitTests.dll /resultsfile:$(TestsPath)\TestResults.trx"  />
+              Command="mstest /testcontainer:$(TestsPath)\UnitTests.dll /resultsfile:$(TestFileName)"  />
     </Target>
 </Project>
