@@ -1,4 +1,4 @@
-Stronger Types
+Stronger Types [![Build Status](http://mattkotsenas-ci.cloudapp.net/job/StrongerTypes/badge/icon)](http://mattkotsenas-ci.cloudapp.net/job/StrongerTypes/)
 ==============
 
 Stronger Types is a .NET [Portable Class Library](http://msdn.microsoft.com/en-us/library/gg597391.aspx) that provides general purpose types
