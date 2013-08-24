@@ -4,6 +4,23 @@ Stronger Types [![Build Status](http://mattkotsenas-ci.cloudapp.net/job/Stronger
 Stronger Types is a .NET [Portable Class Library](http://msdn.microsoft.com/en-us/library/gg597391.aspx) that provides general purpose types
 to make your code safer and easier to read and maintain. Each type is its own namespace so you can pick and choose to suit your needs.
 
+## Getting Started
+
+The easiest way to get StrongerTypes is via [NuGet](https://www.nuget.org/packages/StrongerTypes/). Just add the package via Visual Studio (right click >
+Manage NuGet Packages) or
+
+```
+nuget install StrongerTypes
+```
+
+If you want to build the library yourself, clone the repository and run
+
+```
+MSBuild .\Build\Build.msbuild
+```
+
+from the project's root directory.
+
 ## NonNullable
 
 Unlike value types (e.g. `int`), reference types can be `null`. In some cases, a function may return null as valid output; in other cases null

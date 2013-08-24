@@ -5,16 +5,19 @@
         <Platform>Any CPU</Platform>
         <SolutionFile>..\StrongerTypes.sln</SolutionFile>
     </PropertyGroup>
+    
     <Target Name="Clean">
         <MSBuild Targets="Clean"
                  Projects="$(SolutionFile)"
                  Properties="Configuration=$(Configuration);Platform=$(Platform)" />
     </Target>
+    
     <Target Name="Build">
         <MSBuild Targets="Build"
                  Projects="$(SolutionFile)"
                  Properties="Configuration=$(Configuration);Platform=$(Platform)" />
     </Target>
+    
     <Target Name="Test" DependsOnTargets="Build">
         <PropertyGroup>
             <TestsPath>..\UnitTests\bin\$(Configuration)</TestsPath>
@@ -23,5 +26,17 @@
         <Delete Files="$(TestFileName)" />
         <Exec ContinueOnError="false"
               Command="mstest /testcontainer:$(TestsPath)\UnitTests.dll /resultsfile:$(TestFileName)"  />
+    </Target>
+    
+    <Target Name="Package" DependsOnTargets="Build">
+        <ItemGroup>
+            <NuGetPackages Include="*.nupkg" />
+        </ItemGroup>
+        <Delete Files="@(NuGetPackages)" />
+        <Exec Command="nuget.exe pack ..\StrongerTypes\StrongerTypes.csproj -Symbols  -Properties Configuration=$(Configuration)" />
+    </Target>
+    
+    <Target Name="Publish" DependsOnTargets="Package">
+        <Exec Command="nuget.exe push * -Verbosity Detailed" />
     </Target>
 </Project>
