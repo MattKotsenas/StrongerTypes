@@ -30,13 +30,14 @@
     
     <Target Name="Package" DependsOnTargets="Build">
         <ItemGroup>
-            <NuGetPackages Include="*.nupkg" />
+            <!-- Find the NuGet packages, but exclude any symbols packages as NuGet will push symbol packages automatically -->
+            <NuGetPackages Include="*.nupkg" Exclude="*.symbols.nupkg" />
         </ItemGroup>
         <Delete Files="@(NuGetPackages)" />
-        <Exec Command="nuget.exe pack ..\StrongerTypes\StrongerTypes.csproj -Symbols  -Properties Configuration=$(Configuration)" />
+        <Exec Command="nuget pack ..\StrongerTypes\StrongerTypes.csproj -Symbols  -Properties Configuration=$(Configuration)" />
     </Target>
     
     <Target Name="Publish" DependsOnTargets="Package">
-        <Exec Command="nuget.exe push * -Verbosity Detailed" />
+        <Exec Command="nuget push %(NuGetPackages.Identity) -Verbosity Detailed" />
     </Target>
 </Project>
