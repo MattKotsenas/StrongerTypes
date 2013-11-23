@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace StrongerTypes.Exceptional
@@ -20,21 +21,26 @@ namespace StrongerTypes.Exceptional
     /// and http://stackoverflow.com/questions/10772727/exception-or-either-monad-in-c-sharp
     /// </remarks>
     /// <typeparam name="T">The type of the expected object.</typeparam>
-    public class Exceptional<T>
+    /// <typeparam name="U">The type of the exception that might be thrown.</typeparam>
+    [DataContract]
+    public class Exceptional<T, U> where U : Exception
     {
         /// <summary>
         /// True if evaluating the value threw an exception and Exception is set. False if Value is set.
         /// </summary>
+        [DataMember]
         public bool HasException { get; private set; }
 
         /// <summary>
         /// The exception that was thrown. If HasException is false, Exception is null.
         /// </summary>
-        public Exception Exception { get; private set; }
+        [DataMember]
+        public U Exception { get; private set; }
 
         /// <summary>
         /// The value of the operation if no exception was thrown.
         /// </summary>
+        [DataMember]
         public T Value { get; private set; }
 
         /// <summary>
@@ -61,7 +67,7 @@ namespace StrongerTypes.Exceptional
                 this.Exception = null;
                 this.Value = value();
             }
-            catch(Exception e)
+            catch(U e)
             {
                 this.HasException = true;
                 this.Exception = e;
@@ -73,7 +79,7 @@ namespace StrongerTypes.Exceptional
         ///  Create a new Exceptional with the provided Exception. HasException and Exception are set.
         /// </summary>
         /// <param name="e">The Exception to to wrap.</param>
-        public Exceptional(Exception e)
+        public Exceptional(U e)
         {
             this.HasException = true;
             this.Exception = e;
@@ -86,9 +92,9 @@ namespace StrongerTypes.Exceptional
         /// </summary>
         /// <param name="obj">The object to wrap.</param>
         /// <returns>A new Exceptional that wraps obj.</returns>
-        public static implicit operator Exceptional<T>(T obj)
+        public static implicit operator Exceptional<T, U>(T obj)
         {
-            return new Exceptional<T>(obj);
+            return new Exceptional<T, U>(obj);
         }
     }
 }

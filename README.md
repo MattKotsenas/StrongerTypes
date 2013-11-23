@@ -78,7 +78,7 @@ Often these situations lead to "triagle code" where try/catch blocks are nested 
 reduces the try/catch burden and allows users of your code to clearly see that an exception may be thrown. To use Exceptional in your code:
 
 ```cs
-public static Exceptional<string> FunctionThatMightThrow()
+public static Exceptional<string, Exception> FunctionThatMightThrow()
 {
     try
     {
@@ -86,7 +86,7 @@ public static Exceptional<string> FunctionThatMightThrow()
     }
     catch (Exception e)
     {
-        return new Exceptional(e);
+        return new Exceptional<string, Exception>(e);
     }
 }
 ```
@@ -94,9 +94,9 @@ public static Exceptional<string> FunctionThatMightThrow()
 Or more consise:
 
 ```cs
-public static Exceptional<string> FunctionThatMightThrow()
+public static Exceptional<string, ArgumentException> FunctionThatMightThrow()
 {
-    return new Exceptional(DoSomething); // DoSomething is a Func that may return a string or may throw an exception! 
+    return new Exceptional<string, ArgumentException>(DoSomething); // DoSomething is a Func that may return a string or may throw an ArgumentException!
 }
 ```
 
