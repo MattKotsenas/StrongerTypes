@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace StrongerTypes.NonNullable
@@ -19,11 +20,13 @@ namespace StrongerTypes.NonNullable
     /// Original inspiration comes from http://msmvps.com/blogs/jon_skeet/archive/2008/10/06/non-nullable-reference-types.aspx.
     /// </remarks>
     /// <typeparam name="T">The type to wrap.</typeparam>
+    [DataContract]
     public struct NonNullable<T> where T : class
     {
         /// <summary>
         /// The actual object / value we are holding onto.
         /// </summary>
+        [DataMember]
         private readonly T value;
 
         /// <summary>

@@ -1,18 +1,18 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StrongerTypes.NonNullable;
+using System.Runtime.Serialization;
+using System.IO;
 
 namespace UnitTests
 {
     [TestClass]
     public class NonNullableTests
     {
-        private class SampleClass
+        [Serializable]
+        internal class SampleClass
         {
-            int SampleField
-            {
-                get { return 7; }
-            }
+            public int SampleField { get; set; }
         }
 
         [TestMethod]
@@ -92,6 +92,31 @@ namespace UnitTests
             }
 
             Assert.IsTrue(exceptionThrown);
+        }
+
+        [TestMethod]
+        public void SerializationTest()
+        {
+            int expectedVal = 15;
+
+            var sample = new SampleClass();
+            sample.SampleField = expectedVal;
+
+            var expected = new NonNullable<SampleClass>(sample);
+
+            using (var stream = new MemoryStream())
+            {
+                var serializer = new DataContractSerializer(typeof(NonNullable<SampleClass>));
+                serializer.WriteObject(stream, expected);
+
+                // Reset stream to beginning
+                stream.Flush();
+                stream.Position = 0;
+
+                var actual = (NonNullable<SampleClass>)serializer.ReadObject(stream);
+
+                Assert.AreEqual(expectedVal, actual.Value.SampleField);
+            }
         }
     }
 }
