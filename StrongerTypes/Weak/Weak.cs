@@ -9,12 +9,12 @@ namespace StrongerTypes.Weak
     /// A weak reference wrapper for an object. This brings a generic
     /// weak reference type to .NET 4 and the PCL. The API is similar
     /// to the generic WeakReference&lt;T&gt; class introduced in .NET 4.5.
-    /// <see cref="http://msdn.microsoft.com/en-us/library/gg712738.aspx"/>
-    /// The only differences is the removal of SetTarget, as that breaks
-    /// the immutability of the object.
+    /// (See <a href="http://msdn.microsoft.com/en-us/library/gg712738.aspx">here</a>
+    /// for more info). The only differences is the removal of SetTarget, as that
+    /// breaks the immutability of the object.
     /// 
     /// This class does not allow for resurrection after finalization. See 
-    /// <see cref="http://msdn.microsoft.com/en-us/library/ms404247.aspx"/> for
+    /// <a href="http://msdn.microsoft.com/en-us/library/ms404247.aspx">here</a> for
     /// more info on weak references in .NET.
     /// </summary>
     /// <typeparam name="T">The type of the element to hold a weak reference to.</typeparam>
