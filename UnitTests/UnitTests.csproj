@@ -58,6 +58,7 @@
     <Compile Include="NonNullableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExceptionalTests.cs" />
+    <Compile Include="ReadOnlyTests.cs" />
     <Compile Include="WeakTests.cs" />
   </ItemGroup>
   <ItemGroup>
