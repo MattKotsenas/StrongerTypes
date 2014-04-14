@@ -1,8 +1,15 @@
 Stronger Types [![Build Status](http://mattkotsenas-ci.cloudapp.net/job/StrongerTypes/badge/icon)](http://mattkotsenas-ci.cloudapp.net/job/StrongerTypes/)
 ==============
 
-Stronger Types is a .NET [Portable Class Library](http://msdn.microsoft.com/en-us/library/gg597391.aspx) that provides general purpose types
-to make your code safer and easier to read and maintain. Each type is its own namespace so you can pick and choose to suit your needs.
+Stronger Types is a .NET [Portable Class Library](http://msdn.microsoft.com/en-us/library/gg597391(v=vs.110).aspx) (PCL) that provides general purpose types
+to make your code safer and easier to read and maintain. Each type is its own namespace so you can pick and choose to suit your needs. Because it's
+a Portable Class Library you can reuse this code across:
+
+* .NET 4+
+* Windows 8+
+* Windows Phone 8.1
+* Windows Phone Silverlight 8
+* Silverlight 5
 
 ## Getting Started
 
@@ -16,7 +23,7 @@ nuget install StrongerTypes
 If you want to build the library yourself, clone the repository and run
 
 ```
-MSBuild .\Build\Build.msbuild
+msbuild .\Build\Build.msbuild
 ```
 
 from the project's root directory.
@@ -29,8 +36,8 @@ represents an error. This ambiguous use of `null` causes two problems:
 ### Lack of null handling
 
 ```cs
-string myString = GetValue(); // GetValue() returns null
-Console.WriteLine(myString.ToUpper()); // Throws a NullReferenceException
+string str = GetValue(); // GetValue() returns null
+Console.WriteLine(str.ToUpper()); // Throws a NullReferenceException
 ```
 
 Forgetting to check for `null` when it an expected value is a common source of easily-avoidable errors.
@@ -54,7 +61,7 @@ if (address != null)
     
 Oppositely, checking for `null` can clutter code and reduce readability.
 
-Returning a `NonNullable` from a function signifies that `null` is never an expected result and frees users of your code from spinkling null checks
+Returning a `NonNullable` from a function signifies that `null` is never an expected result and frees others from spinkling null checks
 all over their code. Consider the previous example if both `GetName()` and `GetAddress()` returned `NonNullable<string>`:
 
 ```cs
@@ -74,7 +81,7 @@ Sometimes an `Exception` may be thrown far away from the code that is best suite
 where a query or operation may pass through several layers of code, any of which may throw, and where the recovery logic may depend on business
 rules in the client.
 
-Often these situations lead to "triagle code" where try/catch blocks are nested and each function call must handle a wide range of error conditions. `Exceptional`
+Other times these situations lead to "triagle code" where try/catch blocks are nested and each function call must handle a wide range of error conditions. `Exceptional`
 reduces the try/catch burden and allows users of your code to clearly see that an exception may be thrown. To use Exceptional in your code:
 
 ```cs
@@ -136,6 +143,29 @@ bool success = weakRef.TryGetTarget(out newClassObj));
 ```
 
 ### Doesn't .NET have this already?
-Well, sort of. There is a generic `WeakReference<T>` [class](http://msdn.microsoft.com/en-us/library/gg712738.aspx), but it's only available in .NET 4.5.
-A non-generic `WeakReference` [class](http://msdn.microsoft.com/en-us/library/system.weakreference.aspx) is available more broadly, but it's a bit cumbersome
+Well, sort of. There is a generic [`WeakReference<T>` class](http://msdn.microsoft.com/en-us/library/gg712738.aspx), but it's only available in .NET 4.5.
+A non-generic [`WeakReference` class](http://msdn.microsoft.com/en-us/library/system.weakreference.aspx) is available more broadly, but it's a bit cumbersome
 and promotes incorect use. `Weak<T>` brings the goodness of the .NET 4.5 WeakReference<T> to the PCL.
+
+## ReadOnlyDictionary
+
+A simple read-only wrapper around the generic `Dictionary<TKey, TValue>` type. 'Nuff said.
+
+### Usage
+
+You can create a ReadOnlyDictionary two ways:
+
+```cs
+var source = new Dictionary<string, int>() { { "key1", 1 }, { "key2", 2 } };
+var readOnly = new ReadOnlyDictionary<string, int>(source);
+```
+
+or the simpler:
+
+```cs
+var readOnly = (new Dictionary<string, int>() { { "key1", 1 }, { "key2", 2 } }).AsReadOnly();
+```
+
+### Doesn't .NET have this already too?
+Again, sort of. If you're using .NET 4.5 or newer you can use the built in [`ReadOnlyDictionary<TKey, TValue>` class](http://msdn.microsoft.com/en-us/library/gg712875(v=vs.110).aspx).
+However, like with `WeakReference<T>`, it isn't available in the PCL.
